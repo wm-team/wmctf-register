@@ -26,7 +26,7 @@ def send_verify_email(name: str, receiver: str, token: str):
 
 def send_forget_email(name: str, receiver: str, password: str):
     def _send(message):
-        with smtplib.SMTP(MAIL_SERVER, int(MAIL_PORT)) as smtp:
+        with smtplib.SMTP(MAIL_SERVER, int(MAIL_PORT),  timeout=5) as smtp:
             smtp.login(MAIL_USERNAME, MAIL_PASSWORD)
             smtp.sendmail(MAIL_DEFAULT_SENDER, receiver, message.as_string())
     mail_msg = f"你好，这是你的队伍名和密码，请牢记：<br/>This is your teamname and password, do not forget it again<br/>{escape(name)}<br/>{escape(password)}"
