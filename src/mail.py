@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 from email.header import Header
 from html import escape
 
-from config import MAIL_DEFAULT_SENDER, MAIL_PASSWORD, MAIL_SERVER, MAIL_USERNAME, MAIL_PORT
+from config import MAIL_DEFAULT_SENDER, MAIL_PASSWORD, MAIL_SERVER, MAIL_USERNAME, MAIL_PORT, MAIL_ASYNC
 
 
 def send_verify_email(name: str, receiver: str, token: str):
@@ -19,8 +19,10 @@ def send_verify_email(name: str, receiver: str, token: str):
 
     subject = "Verify your account"
     message['Subject'] = Header(subject, 'utf-8')
-    # Process(target=_send, args=(message, )).start()
-    _send(message)
+    if MAIL_ASYNC:
+        Process(target=_send, args=(message, )).start()
+    else:
+        _send(message)
 
 def send_forget_email(name: str, receiver: str, password: str):
     def _send(message):
@@ -34,5 +36,8 @@ def send_forget_email(name: str, receiver: str, password: str):
 
     subject = "Remember your info"
     message['Subject'] = Header(subject, 'utf-8')
-    # Process(target=_send, args=(message, )).start()
-    _send(message)
+    Process(target=_send, args=(message, )).start()
+    if bool(MAIL_ASYNC):
+        Process(target=_send, args=(message, )).start()
+    else:
+        _send(message)

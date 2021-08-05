@@ -10,5 +10,6 @@ services:
       # - MAIL_USERNAME=***
       # - MAIL_PASSWORD=***
       # - MAIL_DEFAULT_SENDER=***
+      # - MAIL_ASYNC=0
       # - SQLALCHEMY_DATABASE_URI=***
-
+      # - DB_HASHED_PASSWORD=1
