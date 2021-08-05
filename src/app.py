@@ -90,7 +90,8 @@ if __name__ == "__main__":
         subprocess.check_call(["python3", "pow.py", "ask", "31337"], stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError as e:
         print("Wrong pow.")
-        # exit(1)
+        exit(1)
+    subprocess.check_call("figlet 'Welcome To W&M CTF!' -w 1000| lolcat", shell=True)
     r = input("""Choose your action:
   1. register
   2. verify email
