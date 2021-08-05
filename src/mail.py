@@ -2,7 +2,7 @@ from multiprocessing import Process
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-from email.headerregistry import Address
+from html import escape
 
 from config import MAIL_DEFAULT_SENDER, MAIL_PASSWORD, MAIL_SERVER, MAIL_USERNAME, MAIL_PORT
 
@@ -27,7 +27,7 @@ def send_forget_email(name: str, receiver: str, password: str):
         with smtplib.SMTP(MAIL_SERVER, int(MAIL_PORT)) as smtp:
             smtp.login(MAIL_USERNAME, MAIL_PASSWORD)
             smtp.sendmail(MAIL_DEFAULT_SENDER, receiver, message.as_string())
-    mail_msg = f"你好，这是你的队伍名和密码，请牢记：<br/>This is your teamname and password, do not forget it again<br/>{name}<br/>{password}"
+    mail_msg = f"你好，这是你的队伍名和密码，请牢记：<br/>This is your teamname and password, do not forget it again<br/>{escape(name)}<br/>{escape(password)}"
     message = MIMEText(mail_msg, 'html', 'utf-8')
     message['From'] = f"WMCTF <{MAIL_DEFAULT_SENDER}>"
     message['To'] = f"{name} <{receiver}>"
