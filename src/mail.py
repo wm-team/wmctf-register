@@ -9,7 +9,7 @@ from config import MAIL_DEFAULT_SENDER, MAIL_PASSWORD, MAIL_SERVER, MAIL_USERNAM
 
 def send_verify_email(name: str, receiver: str, token: str):
     def _send(message):
-        with smtplib.SMTP(MAIL_SERVER, int(MAIL_PORT)) as smtp:
+        with smtplib.SMTP(MAIL_SERVER, int(MAIL_PORT),  timeout=5) as smtp:
             smtp.login(MAIL_USERNAME, MAIL_PASSWORD)
             smtp.sendmail(MAIL_DEFAULT_SENDER, receiver, message.as_string())
     mail_msg = f"你好，感谢注册WMCTF，输入以下代码验证你的账号：{token}<br/>Hello, thanks for register, verify your account by code: {token}"
