@@ -8,11 +8,17 @@ from sqlalchemy import orm
 import random
 import string
 import hashlib
+import re
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 Base = declarative_base()
 Base.metadata.bind = engine
 session = orm.scoped_session(orm.sessionmaker())(bind=engine)
+
+MAIL_RE = re.compile(
+    r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$")
+PHONE_RE = re.compile(
+    r"^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$")
 
 
 class User(Base):
@@ -37,6 +43,13 @@ class User(Base):
         self.phone = phone
         self.verify_code = ''.join(random.choice(
             string.ascii_uppercase + string.digits) for _ in range(8))
+        self.check()
+
+    def check(self):
+        if not MAIL_RE.fullmatch(self.email):
+            raise Exception("Invalid email")
+        if not PHONE_RE.fullmatch(self.phone):
+            raise Exception("Invalid phone")
         if not is_valid_region_code(self.location):
             raise Exception("Invalid region code")
 
