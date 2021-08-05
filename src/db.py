@@ -57,7 +57,7 @@ class User(Base):
         except sa.exc.IntegrityError as e:
             key = e.orig.args[1].split("'")[-2]
             raise Exception(f"User already taken, {key} duplicated.")
-        except Exception:
+        except Exception as e:
             raise Exception("Invalid user information")
         return user
 

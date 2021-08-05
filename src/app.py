@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import subprocess
 
-import sqlalchemy
+import traceback
 
 from db import User, session
 from region import get_region_name
@@ -110,15 +110,21 @@ if __name__ == "__main__":
   4. resend email
   5. forget teamname/password
 > """)
-    if r == "1":
-        register()
-    elif r == "2":
-        verify()
-    elif r == "3":
-        check()
-    elif r == "4":
-        resend()
-    elif r == "5":
-        forget()
-    else:
-        print("Wrong action.")
+    try:
+        if r == "1":
+            register()
+        elif r == "2":
+            verify()
+        elif r == "3":
+            check()
+        elif r == "4":
+            resend()
+        elif r == "5":
+            forget()
+        else:
+            print("Wrong action.")
+    except Exception as e:
+        print("Something wrong happened")
+        print("Please report to https://github.com/wm-team/wmctf-register/issues")
+        traceback.print_exc()
+        
