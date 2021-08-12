@@ -26,13 +26,13 @@ try:
     HAVE_GMP = True
 except ImportError:
     HAVE_GMP = False
-    # sys.stderr.write("[NOTICE] Running 10x slower, gotta go fast? pip3 install gmpy2\n")
+    sys.stderr.write("[NOTICE] Running 10x slower, gotta go fast? pip3 install gmpy2\n")
 
 VERSION = 's'
 MODULUS = 2**1279-1
 CHALSIZE = 2**128
 
-SOLVER_URL = 'https://goo.gle/kctf-pow'
+SOLVER_URL = os.environ.get('SOLVER_URL', 'https://goo.gle/kctf-pow')
 
 def python_sloth_root(x, diff, p):
     exponent = (p + 1) // 4
