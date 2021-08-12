@@ -13,3 +13,5 @@ services:
       # - MAIL_ASYNC=
       # - SQLALCHEMY_DATABASE_URI=***
       # - DB_HASHED_PASSWORD=1
+      # - SOLVER_URL=https://wmctf.wm-team.cn/pow.py
+
