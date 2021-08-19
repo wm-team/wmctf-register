@@ -59,6 +59,8 @@ class User(Base):
             password = hashlib.md5(password.encode()).hexdigest()
         user: User = session.query(User).filter(
             User.teamname == teamname, User.password == password).first()
+        if not user:
+            raise Exception("Wrong teamname or pasword")
         return user
 
     @staticmethod
