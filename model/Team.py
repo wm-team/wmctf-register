@@ -1,3 +1,4 @@
+from typing import Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Session
 
@@ -12,7 +13,7 @@ class Team(DB.Base):
     token = sa.Column(sa.String(80), unique=False, nullable=False)
 
     @staticmethod
-    def create(session: Session, name: str) -> "Team":
+    def create(session: Session, name: str) -> Optional["Team"]:
         if Team.get_by_name(session, name):
             return None
         team = Team(
@@ -24,13 +25,13 @@ class Team(DB.Base):
         return team
 
     @staticmethod
-    def get_by_id(session: Session, id: int) -> "Team":
+    def get_by_id(session: Session, id: int) -> Optional["Team"]:
         return session.query(Team).filter(Team.id == id).first()
 
     @staticmethod
-    def get_by_name(session: Session, name: str) -> "Team":
+    def get_by_name(session: Session, name: str) -> Optional["Team"]:
         return session.query(Team).filter(Team.name == name).first()
 
     @staticmethod
-    def get_by_token(session: Session, token: str) -> "Team":
+    def get_by_token(session: Session, token: str) -> Optional["Team"]:
         return session.query(Team).filter(Team.token == token).first()

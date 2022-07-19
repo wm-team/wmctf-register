@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import List, Optional, Type
+from typing import Callable, List, Optional, Type
 from xml.sax.handler import feature_external_pes
 
 
@@ -8,7 +8,7 @@ class MenuExit(Exception):
 
 
 class ItemBase(ABC):
-    def __init__(self, name: str, goto: Optional[Type["MenuBase"]] = None):
+    def __init__(self, name: str, goto: Optional[Callable[..., "MenuBase"]] = None):
         self.name = name
         self.goto = goto
 

@@ -1,3 +1,4 @@
+from typing import List
 import sqlalchemy as sa
 from sqlalchemy.orm import Session
 
@@ -47,7 +48,9 @@ class User(DB.Base):
         return None
 
     def my_team(self, session: Session):
-        return Team.get_by_id(session, self.team_id)
+        if self.team_id is None:
+            return None
+        return Team.get_by_id(session, int(str(self.team_id)))
 
     def exit_team(self, session: Session):
         self.team_id = None
@@ -77,3 +80,6 @@ class User(DB.Base):
         if not team:
             return "Not in team"
         return f"In team {team.name}"
+
+    def teammates(self, session: Session) -> List["User"]:
+        return session.query(User).filter(User.team_id == self.team_id).all()

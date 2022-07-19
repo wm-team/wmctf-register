@@ -63,8 +63,32 @@ class InviteItem(ItemBase):
             print("You are not logged in.")
             return False
         team = user.my_team(main_app.db.session)
+        if not team:
+            print("You are not in a team.")
+            return False
         print("Please tell your friend to join the team with this token:")
         print(team.token)
+        return True
+
+
+class TeamInfoItem(ItemBase):
+    def __init__(self):
+        super().__init__("Team Info")
+
+    def action(self) -> bool:
+        user = main_app.current_user
+        if not user:
+            print("You are not logged in.")
+            return False
+        team = user.my_team(main_app.db.session)
+        if not team:
+            print("You are not in a team.")
+            return False
+        print("Team Name: " + team.name)
+        print("Team Token: " + team.token)
+        print("Team Members:")
+        for member in user.teammates(main_app.db.session):
+            print("\t" + member.name)
         return True
 
 
@@ -94,5 +118,6 @@ class UserMenu(MenuBase):
         else:
             return [
                 InviteItem(),
+                TeamInfoItem(),
                 ExitTeamItem(),
             ]
