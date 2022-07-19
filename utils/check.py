@@ -20,3 +20,7 @@ def check_name(name: str):
 
 def check_password(password: str):
     return password.isprintable() and 8 <= len(password) <= 20
+
+
+def check_team_name(name: str):
+    return name.isprintable() and 1 <= len(name) <= 20
