@@ -1,7 +1,6 @@
-country-list==1.0.0
-ecdsa==0.17.0
-Flag==0.1.1
-greenlet==1.1.0
-PyMySQL==1.0.2
-six==1.16.0
-SQLAlchemy==1.4.22
+country_list==1.0.0
+ecdsa==0.18.0
+gmpy2==2.1.2
+pydantic==1.9.1
+SQLAlchemy==1.4.39
+pyyaml==6.0
