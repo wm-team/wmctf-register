@@ -2,6 +2,7 @@ from app import main_app
 from menu.UserMenu import UserMenu
 from model import User
 from utils import check
+from getpass import getpass
 
 from .MenuBase import ItemBase, MenuBase
 
@@ -21,9 +22,13 @@ class RegisterItem(ItemBase):
         if not check.check_name(name):
             print("Username must be printable and between 6 and 20 characters.")
             return False
-        password = input("Password: ").strip()
+        password = getpass("Password: ").strip()
         if not check.check_password(password):
             print("Password must be printable and between 8 and 20 characters.")
+            return False
+        confirmed_password = getpass("Confirm Password: ").strip()
+        if password != confirmed_password:
+            print("Password does not match.")
             return False
         email = input("Email: ").strip()
         if not check.check_email(email):
@@ -52,8 +57,8 @@ class LoginItem(ItemBase):
 
     def action(self) -> bool:
         print("Please input your login information:")
-        name = input("Username: ")
-        password = input("Password: ")
+        name = input("Username: ").strip()
+        password = getpass("Password: ").strip()
         user = User.login(main_app.db.session,
                           name=name,
                           password=password,
