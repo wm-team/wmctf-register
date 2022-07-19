@@ -14,8 +14,8 @@ class CreateTeamItem(ItemBase):
             return False
         print("Please input your team information:")
         name = input("Team Name: ").strip()
-        if not check.check_team_name(name):
-            print("Team name must be printable and between 1 and 20 characters.")
+        if name == "":
+            print("Team name cannot be empty.")
             return False
         team = user.create_team(main_app.db.session, name=name)
         if not team:
@@ -33,7 +33,7 @@ class JoinTeamItem(ItemBase):
             print("You are not logged in.")
             return False
         print("Please input your team information:")
-        token = input("Team Token: ").strip()
+        token = input("Team Token: ")
         team = user.join_team(main_app.db.session, token=token)
         if not team:
             print("Team not found")

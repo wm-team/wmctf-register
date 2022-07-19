@@ -37,7 +37,7 @@ def run_menu(menu: MenuBase):
                 print(f"{idx + 1}. {i.name}")
             print(f"{exit_idx}. Exit")
             print(current_menu.FOOT)
-            r = input(f"[1-{exit_idx}]: ").strip()
+            r = input(f"[1-{exit_idx}]: ")
             try:
                 if int(r) < 1 or int(r) > exit_idx:
                     continue
