@@ -61,6 +61,8 @@ class User(DB.Base):
         team = Team.get_by_token(session, token)
         if not team:
             return None
+        if len(session.query(User).filter(User.team_id == self.team_id).all()) >= 20:
+            return "Team is full, please create a new team"
         self.team_id = team.id
         session.add(self)
         session.commit()

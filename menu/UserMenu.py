@@ -37,7 +37,12 @@ class JoinTeamItem(ItemBase):
         team = user.join_team(main_app.db.session, token=token)
         if not team:
             print("Team not found")
-        return True
+            return False
+        elif type(team) is str:
+            print(team)
+            return False
+        else:
+            return True
 
 
 class ExitTeamItem(ItemBase):
