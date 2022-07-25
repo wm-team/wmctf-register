@@ -1,7 +1,7 @@
 from typing import List
 import sqlalchemy as sa
 from sqlalchemy.orm import Session
-from sqlalchemy.sql import func
+import datetime
 
 from app import DB
 
@@ -16,8 +16,7 @@ class User(DB.Base):
     email = sa.Column(sa.String(120), nullable=False)
     password = sa.Column(sa.String(120), nullable=False)
     phone = sa.Column(sa.String(20), nullable=False)
-    time_created = sa.Column(sa.DateTime(timezone=True),
-                             server_default=func.now())
+    time_created = sa.Column(sa.DateTime(timezone=True), default=datetime.datetime.now)
 
     def __init__(self, name: str, password: str, email: str, phone: str):
         self.name = name

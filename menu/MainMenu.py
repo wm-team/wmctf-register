@@ -25,7 +25,7 @@ class RegisterItem(ItemBase):
             print("Email is invalid.")
             return False
         phone = input("Phone: ").strip()
-        if not check.check_phone(phone):
+        if not check.check_phone(phone) and phone != "":
             print("Phone is invalid.")
             return False
         user = User.register(main_app.db.session,
