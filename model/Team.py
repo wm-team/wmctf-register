@@ -1,6 +1,8 @@
 from typing import Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
+
 
 from app import DB
 from utils import random_string
@@ -11,6 +13,8 @@ class Team(DB.Base):
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String(80), unique=True, nullable=False)
     token = sa.Column(sa.String(80), unique=False, nullable=False)
+    time_created = sa.Column(sa.DateTime(timezone=True),
+                             server_default=func.now())
 
     @staticmethod
     def create(session: Session, name: str) -> Optional["Team"]:
