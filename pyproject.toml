@@ -18,6 +18,7 @@ email-validator = "^2.0.0.post2"
 rich = "^13.5.0"
 passlib = "^1.7.4"
 pre-commit = "^3.3.3"
+country-list = "^1.0.0"
 
 
 [[tool.poetry.source]]
@@ -29,7 +30,6 @@ priority = "default"
 [tool.poetry.group.dev.dependencies]
 ecdsa = "^0.18.0"
 gmpy2 = "^2.1.5"
-country-list = "^1.0.0"
 autopep8 = "^2.0.2"
 isort = "^5.12.0"
 

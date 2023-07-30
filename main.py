@@ -1,5 +1,6 @@
+#/usr/bin/env python3
 import sys
-from os import system, environ
+from os import environ, system
 
 from app.app import App
 from config import INTRODUCTION

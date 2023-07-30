@@ -1,9 +1,10 @@
 version: "2"
 services:
-  flask:
+  register:
     build: .
     ports:
-      - "2022:8000"
+      - "2023:22"
     environment:
       - SOLVER_URL=https://wmctf.wm-team.cn/pow.py
       - POW_DIFFICULTY=11337
+      - DATABASE=postgres://ctfd:ctfd@db/ctfd

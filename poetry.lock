@@ -1016,4 +1016,4 @@ reference = "mirrors"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5f5b1839c95910f3c218ddb566bf9e0b9cad80bf6a25c94889f9287c5204cb5a"
+content-hash = "f22ed512e816f1d77f9fc6173364164451bb2d4e92606207120af7ac2c9917a5"

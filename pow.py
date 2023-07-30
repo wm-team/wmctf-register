@@ -118,7 +118,7 @@ def can_bypass(chal, sol):
     return vk.verify(signature=sig, data=bytes(chal, 'ascii'), hashfunc=hashlib.sha256, sigdecode=sigdecode_der)
 
 
-def verify_challenge(chal, sol, allow_bypass=True):
+def verify_challenge(chal, sol, allow_bypass=False):
     if allow_bypass and can_bypass(chal, sol):
         return True
     [diff, x] = decode_challenge(chal)
