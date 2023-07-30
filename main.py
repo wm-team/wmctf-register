@@ -1,18 +1,21 @@
 import sys
 from os import system, environ
 
-from app import main_app
-from menu import MainMenu, run_menu
+from app.app import App
+from config import INTRODUCTION
+from menu.MainMenu import MainMenu
 
-system("echo 'Welcome to WMCTF 2022' | figlet -f slant -c -t | lolcat")
+if not environ.get("DEBUG"):
+    system("echo 'Welcome to WMCTF 2023' | figlet -f lean -c -t | lolcat")
 
-difficulty = int(environ.get("POW_DIFFICULTY", "0"))
+    difficulty = int(environ.get("POW_DIFFICULTY", "0"))
 
-r = system(f"python3 pow.py ask {difficulty}")
-if r != 0:
-    print("Failed to start pow")
-    sys.exit(1)
+    r = system(f"python3 pow.py ask {difficulty}")
+    if r != 0:
+        print("Failed to start pow")
+        sys.exit(1)
 
-main_app.init_db()
+    print(INTRODUCTION)
 
-run_menu(MainMenu())
+app = App()
+app.run_menu(MainMenu.this())

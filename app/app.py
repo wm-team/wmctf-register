@@ -1,32 +1,43 @@
-from os import path
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 
-import yaml
+import inquirer
 
-from config import Config
+from menu.MenuBase import MenuBase, MenuExit
 
-if TYPE_CHECKING:
-    from model import User
-
-from .db import DB
+from .user import User
+from rich import print
 
 
 class App:
-    current_user: Optional["User"] = None
-    db: DB
+    user: Optional["User"] = None
 
-    def __init__(self, *, config_path="config.yaml"):
-        self.config = self.__load_config(config_path)
-        self.current_user = None
+    def run_menu(self, menu: MenuBase):
+        current_menu: MenuBase = menu
+        try:
+            while True:
+                items = current_menu.items
+                items = [item for item in items if item.show(app=self)]
+                print("-" * 40)
+                print(current_menu.head(app=self), end="")
+                choices = [item.name for item in items] + ["Exit"]
+                questions = [
+                    inquirer.List(
+                        "action",
+                        message="What do you want to do?",
+                        choices=choices,
+                        default=choices[0],
+                    )
+                ]
+                answers = inquirer.prompt(questions)
+                if answers:
+                    action = answers["action"]
+                    if action == "Exit":
+                        raise MenuExit()
 
-    def __load_config(self, config_path: str):
-        if path.exists(config_path):
-            with open(config_path, "r") as f:
-                return Config(**yaml.safe_load(f))
-        return Config()
-
-    def init_db(self):
-        self.db = DB(self.config.database)
-
-
-app = App()
+                    item = items[choices.index(action)]
+                    if ret := item.action(app=self):
+                        current_menu = ret
+        except MenuExit:
+            pass
+        except KeyboardInterrupt:
+            pass

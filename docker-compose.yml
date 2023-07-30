@@ -2,10 +2,8 @@ version: "2"
 services:
   flask:
     build: .
-    ports: 
+    ports:
       - "2022:8000"
     environment:
       - SOLVER_URL=https://wmctf.wm-team.cn/pow.py
       - POW_DIFFICULTY=11337
-    volumes:
-      - ./data:/app/data

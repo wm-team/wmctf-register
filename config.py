@@ -1,7 +1,21 @@
-import os
+from pydantic import (
+    PostgresDsn,
+)
+from pydantic_settings import BaseSettings
 
-from pydantic import BaseModel
+INTRODUCTION = """WMCTF is a Jeopardy-style Online Capture The Flag Competition presented by W&M. The contest is opened to all participants around the world. Teams can compete from any location. The number of team members shall not be more than 20.The mobile phone number is an optional item, which is used to contact the prize distribution.
+
+Platform: https://wmctf.wm-team.cn/
+Registration: nc wmctf.wm-team.cn 2022
+Discord: https://discord.gg/WRmvFkWnSn
+QQ Group: 727697644
+
+Enjoy your time!
+"""
 
 
-class Config(BaseModel):
-    database = os.environ.get("DATABASE_URL", "sqlite:///data/db.sqlite")
+class Config(BaseSettings):
+    database: PostgresDsn = "postgres://postgres:ctfd@db/ctfd"  # type: ignore
+
+
+config = Config()
