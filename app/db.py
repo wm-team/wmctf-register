@@ -15,8 +15,8 @@ class DB:
 
     def create_user(self, name: str, email: str, country: str | None, password: str) -> int:
         with self.conn.cursor() as cur:
-            cur.execute("INSERT INTO users (name, email, country, password) VALUES (%s, %s, %s, %s) RETURNING id",
-                        (name, email, country, bcrypt_sha256.hash(password)))
+            cur.execute("INSERT INTO users (name, email, country, password, hidden, banned, verified) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id",
+                        (name, email, country, bcrypt_sha256.hash(password), False, False, False))
             self.conn.commit()
             return cast(tuple, cur.fetchone())[0]
 
@@ -35,8 +35,8 @@ class DB:
 
     def create_team(self, name: str, password: str, captain_id: int) -> int:
         with self.conn.cursor() as cur:
-            cur.execute("INSERT INTO teams (name, password, captain_id, secret) VALUES (%s, %s, %s, %s) RETURNING id",
-                        (name, bcrypt_sha256.hash(password), captain_id, secrets.token_urlsafe()))
+            cur.execute("INSERT INTO teams (name, password, captain_id, secret, hidden, banned) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
+                        (name, bcrypt_sha256.hash(password), captain_id, secrets.token_urlsafe(), False, False))
             self.conn.commit()
             return cast(tuple, cur.fetchone())[0]
 
